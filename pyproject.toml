@@ -1,12 +1,25 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "fastapi-adapater"
 version = "0.1.0"
-description = "Add your description here"
+description = "Fastapi adapter for NestPy"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "nestpy-protocols==0.1.0.post2",
+    "twine>=6.2.0",
 ]
+authors = [
+    {name = "Brandon Jared Molina Vázquez", email = "jaredbrandon970@gmail.com"}
+]
+
+[project.urls]
+"Homepage" = "https://github.com/brandbold-Ch/fastapi_adapter.git"
+"Documentation" = "https://github.com/brandbold-Ch/fastapi_adapter.git"
+"Repository" = "https://github.com/brandbold-Ch/fastapi_adapter.git"
 
 [[tool.uv.index]]
 url = "https://test.pypi.org/simple/"
