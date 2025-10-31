@@ -1,26 +1,35 @@
-from typing import Union, Any, Callable
+from typing import Union, Any, Callable, Dict
+from fastapi import FastAPI, APIRouter
 from nestpy_protocols.webadapters.contracts import BaseServerFunctions
 
 
 class ServerFunctionsImpl(BaseServerFunctions):
 
+    def __init__(self, app: FastAPI, routers: Dict[str, APIRouter]) -> None:
+        self.app = app
+        self.routers = routers
+
     def add_api_route(self, path: str, endpoint: Callable[..., Any], **kwargs: Any) -> None:
-        pass
+        self.app.add_api_route(path, endpoint, **kwargs)
 
     def add_api_websocket_route(self, path: str, endpoint: Callable[..., Any], **kwargs: Any) -> None:
-        pass
+        self.app.add_api_websocket_route(path, endpoint, **kwargs)
 
     def websocket(self, path: str, **kwargs: Any) -> None:
-        pass
+        self.app.websocket(path, **kwargs)
 
     def include_router_group(self, router: Any, **kwargs: Any) -> None:
-        pass
+        self.app.include_router(router, **kwargs)
 
     def trace(self, path: str, **kwargs: Any) -> None:
-        pass
+        self.app.trace(path, **kwargs)
 
     def set_global_url_prefix(self, prefix: str) -> None:
-        pass
+        self.app.root_path = prefix
 
     def listen(self, host: str, port: Union[str, int]) -> None:
-        pass
+        for router in self.routers.values():
+            self.app.include_router(router=router)
+
+        import uvicorn
+        uvicorn.run(self.app, host=host, port=port)

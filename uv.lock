@@ -1,0 +1,23 @@
+version = 1
+revision = 3
+requires-python = ">=3.10"
+
+[[package]]
+name = "fastapi-adapater"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "nestpy-protocols" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "nestpy-protocols", specifier = "==0.1.0.post2" }]
+
+[[package]]
+name = "nestpy-protocols"
+version = "0.1.0.post2"
+source = { registry = "https://test.pypi.org/simple/" }
+sdist = { url = "https://test-files.pythonhosted.org/packages/b1/db/c279eca416e3b52f2c9438353c819a3f91f28b23ab51b820c332aafbdc31/nestpy_protocols-0.1.0.post2.tar.gz", hash = "sha256:6ce667384a9b242a482de059043f47e808d2f02ab3310643ce848d2f125b06fa", size = 9295, upload-time = "2025-10-30T23:11:33.682Z" }
+wheels = [
+    { url = "https://test-files.pythonhosted.org/packages/c6/40/d866dbd215c886454b58d1295814483c76a77b5ba90816a18fa6fbebfdbd/nestpy_protocols-0.1.0.post2-py3-none-any.whl", hash = "sha256:11bb76b424253ce1a84830091ce8da5398358530aa3eefd7aae88d8a7b331b48", size = 13598, upload-time = "2025-10-30T23:11:32.29Z" },
+]
