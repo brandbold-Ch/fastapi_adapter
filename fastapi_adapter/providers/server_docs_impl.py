@@ -1,11 +1,13 @@
 from typing import Dict, Any, List
 from nestpy_protocols.webadapters.contracts import BaseServerDocs
 from fastapi import FastAPI
+from fastapi_adapter.patterns import UniqueInstance
 
 
-class ServerDocsImp(BaseServerDocs):
+class ServerDocsImpl(UniqueInstance, BaseServerDocs):
 
     def __init__(self, app: FastAPI) -> None:
+        super().__init__()
         self.app = app
 
     def set_openapi_url(self, url: str) -> None:

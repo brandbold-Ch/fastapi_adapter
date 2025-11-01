@@ -1,13 +1,13 @@
-from typing import Union, Any, Callable, Dict
-from fastapi import FastAPI, APIRouter
+from typing import Union, Any, Callable
+from fastapi import FastAPI
 from nestpy_protocols.webadapters.contracts import BaseServerFunctions
+from fastapi_adapter.patterns import UniqueInstance
 
+class ServerFunctionsImpl(UniqueInstance, BaseServerFunctions):
 
-class ServerFunctionsImpl(BaseServerFunctions):
-
-    def __init__(self, app: FastAPI, routers: Dict[str, APIRouter]) -> None:
+    def __init__(self, app: FastAPI) -> None:
+        super().__init__()
         self.app = app
-        self.routers = routers
 
     def add_api_route(self, path: str, endpoint: Callable[..., Any], **kwargs: Any) -> None:
         self.app.add_api_route(path, endpoint, **kwargs)
@@ -28,8 +28,9 @@ class ServerFunctionsImpl(BaseServerFunctions):
         self.app.root_path = prefix
 
     def listen(self, host: str, port: Union[str, int]) -> None:
-        for router in self.routers.values():
+        for router in self.app.extra["routers"].values():
             self.app.include_router(router=router)
+        self.app.extra.clear()
 
         import uvicorn
         uvicorn.run(self.app, host=host, port=port)

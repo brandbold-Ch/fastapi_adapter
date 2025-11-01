@@ -1,12 +1,13 @@
 from typing import Any, Dict, List, Type, Callable, Union
-
+from fastapi_adapter.patterns import UniqueInstance
 from fastapi import FastAPI
 from nestpy_protocols.webadapters.contracts import BaseServerParams
 
 
-class ServerParamsImpl(BaseServerParams):
+class ServerParamsImpl(UniqueInstance, BaseServerParams):
 
     def __init__(self, app: FastAPI) -> None:
+        super().__init__()
         self.app = app
 
     def set_contact(self, contact: Union[Dict[str, Any], str, None]) -> None:
