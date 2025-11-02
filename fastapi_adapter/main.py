@@ -1,39 +1,32 @@
-from fastapi import FastAPI
-from nestpy_protocols.webadapters import AbstractWebServer
-from nestpy_protocols.webadapters.contracts import BaseServerDocs, BaseServerMiddlewares, BaseServerRouter, \
-    BaseServerEvents, BaseServerFunctions, BaseServerParams
-from fastapi_adapter.patterns import UniqueInstance
-from fastapi_adapter.providers import ServerEventsImpl, ServerMiddlewaresImpl, ServerFunctionsImpl, ServerParamsImpl, \
-    ServerRouterImpl, ServerDocsImpl
-from fastapi_adapter.utils import StorageRouters
+from nestpy_protocols.webprotocols import FrameworkLifProtocol
+from nestpy_protocols.webprotocols.framework.base import FrameworkWebProtocol, FrameworkMwProtocol, \
+    FrameworkConfProtocol, FrameworkExcProtocol, FrameworkCompProtocol, FrameworkDocProtocol
+from fastapi_adapter.providers import ProviderLifImpl, ProviderMwImpl, ProviderCompImpl, ProviderConfImpl, \
+    ProviderDocsImpl, ProviderExcImpl
 
 
-class FastAPIAdapter(AbstractWebServer):
-
-    def __init__(self) -> None:
-        super().__init__()
-        self.app = FastAPI(routers=StorageRouters())
+class FastAPIAdapter(FrameworkWebProtocol):
 
     @property
-    def server_params(self) -> BaseServerParams:
-        return ServerParamsImpl(self.app)
+    def conf(self) -> FrameworkConfProtocol:
+        return ProviderConfImpl()
 
     @property
-    def server_functions(self) -> BaseServerFunctions:
-        return ServerFunctionsImpl(self.app)
+    def comp(self) -> FrameworkCompProtocol:
+        return ProviderCompImpl()
 
     @property
-    def server_events(self) -> BaseServerEvents:
-        return ServerEventsImpl(self.app)
+    def mw(self) -> FrameworkMwProtocol:
+        return ProviderMwImpl()
 
     @property
-    def server_router(self) -> BaseServerRouter:
-        return ServerRouterImpl(self.app)
+    def doc(self) -> FrameworkDocProtocol:
+        return ProviderDocsImpl()
 
     @property
-    def server_middlewares(self) -> BaseServerMiddlewares:
-        return ServerMiddlewaresImpl(self.app)
+    def exc(self) -> FrameworkExcProtocol:
+        return ProviderExcImpl()
 
     @property
-    def server_docs(self) -> BaseServerDocs:
-        return ServerDocsImpl(self.app)
+    def lif(self) -> FrameworkLifProtocol:
+        return ProviderLifImpl()

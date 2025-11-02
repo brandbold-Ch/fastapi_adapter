@@ -8,10 +8,7 @@ version = "0.1.0.post1"
 description = "Fastapi adapter for NestPy"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = [
-    "nestpy-protocols==0.1.0.post2",
-    "twine>=6.2.0",
-]
+dependencies = []
 authors = [
     {name = "Brandon Jared Molina Vázquez", email = "jaredbrandon970@gmail.com"}
 ]
